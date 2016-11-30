@@ -24,6 +24,7 @@ using namespace std;
 typedef float point3[3];
 static GLfloat viewer[] = { 0.0, 0.0, 50.0 };
 static GLfloat pointOfObservtion[] = { 0.0, 0.0, 0.0 };
+static GLfloat vectorOfUp[] = { 0.0, 1.0, 0.0 };
 
 static GLfloat thetax = 0.0;   // k?t obrotu obiektu
 static GLfloat thetay = 0.0;   // k?t obrotu obiektu
@@ -40,7 +41,8 @@ static float delta_x = 0, delta_y = 0, delta_z = 0;       // ró?nica pomi?dzy po
 float alfa = 0, beta = 0;
 float alfaR = 0, betaR = 0;
 double r = 0;
-
+int test = 0;
+float alfaP = 0, betaP = 0;
 //--------------------------------------------
 
 
@@ -208,6 +210,105 @@ void move()
 	{
 		pozycja[i]++;
 		if (pozycja[i] > orbitalPeriod[i])pozycja[i] = 0;
+		if (test == 1)
+		{
+			viewer[0] = elips[1][pozycja[1]][0];
+			viewer[1] = elips[1][pozycja[1]][1];
+			viewer[2] = elips[1][pozycja[1]][2]+planetSize[1];
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test ==2)
+		{
+			viewer[0] = elips[2][pozycja[1]][0];
+			viewer[1] = elips[2][pozycja[1]][1];
+			viewer[2] = elips[2][pozycja[1]][2] + planetSize[2];
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test == 3)
+		{
+			viewer[0] = elips[3][pozycja[1]][0];
+			viewer[1] = elips[3][pozycja[1]][1];
+			viewer[2] = elips[3][pozycja[1]][2] + planetSize[3];
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test == 4)
+		{
+			viewer[0] = elips[4][pozycja[1]][0];
+			viewer[1] = elips[4][pozycja[1]][1];
+			viewer[2] = elips[4][pozycja[1]][2] + planetSize[4];
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test == 5)
+		{
+			/*viewer[0] = elips[5][pozycja[1]][0];
+			viewer[1] = elips[5][pozycja[1]][1];
+			viewer[2] = elips[5][pozycja[1]][2] + planetSize[5];*/
+			float a=viewer[0], c=viewer[1], b=viewer[2];
+		
+			viewer[0] = ((planetSize[5]+0.1) * cos(alfaP) * cos(betaP))+elips[5][pozycja[5]][0];
+			viewer[1] = ((planetSize[5]+0.1) * sin(betaP)) +elips[5][pozycja[5]][1];
+			viewer[2] = ((planetSize[5]+0.1) * sin(alfaP) * cos(betaP))+ elips[5][pozycja[5]][2];
+
+			vectorOfUp[0] = viewer[0]-elips[5][pozycja[5]][0];
+			vectorOfUp[1] = viewer[1]-elips[5][pozycja[5]][1];
+			vectorOfUp[2] = viewer[2]-elips[5][pozycja[5]][2];
+
+			pointOfObservtion[0] = (viewer[0] - a)*10;
+			pointOfObservtion[1] = (viewer[1] - b)*10;
+			pointOfObservtion[2] = (viewer[2] - c)*10;
+
+			
+		}
+		if (test == 6)
+		{
+			viewer[0] = ((planetSize[6] + 0.1) * cos(alfaP) * cos(betaP)) + elips[6][pozycja[6]][0];
+			viewer[1] = ((planetSize[6] + 0.1) * sin(betaP)) + elips[6][pozycja[6]][1];
+			viewer[2] = ((planetSize[6] + 0.1) * sin(alfaP) * cos(betaP)) + elips[6][pozycja[6]][2];
+
+			pointOfObservtion[0] = ((planetSize[6] + 10) * cos(alfaP) * cos(betaP)) + elips[6][pozycja[6]][0];
+			pointOfObservtion[1] = ((planetSize[6] + 10) * sin(betaP)) + elips[6][pozycja[6]][1];
+			pointOfObservtion[2] = ((planetSize[6] + 10) * sin(alfaP) * cos(betaP)) + elips[6][pozycja[6]][2];
+			
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test == 7)
+		{
+			viewer[0] = elips[7][pozycja[1]][0];
+			viewer[1] = elips[7][pozycja[1]][1];
+			viewer[2] = elips[7][pozycja[1]][2] + planetSize[7];
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 0.0;
+			vectorOfUp[2] = 1.0;
+		}
+		if (test == 8)
+		{
+			viewer[0] = elips[8][pozycja[1]][0];
+			viewer[1] = elips[8][pozycja[1]][1];
+			viewer[2] = elips[8][pozycja[1]][2] + planetSize[8];
+		}
+		if (test == 9)
+		{
+			viewer[0] = 0;
+			viewer[1] = 0;
+			viewer[2] = 50;
+			vectorOfUp[0] = 0.0;
+			vectorOfUp[1] = 1.0;
+			vectorOfUp[2] = 0.0;
+
+		}
+		
+		
+		
 	}
 	Sleep(timeOrbit);
 	glutPostRedisplay(); //odœwie¿enie zawartoœci aktualnego okna
@@ -222,7 +323,7 @@ void RenderScene(void)
 
 	glLoadIdentity();
 
-	gluLookAt(viewer[0], viewer[1], viewer[2], pointOfObservtion[0], pointOfObservtion[1], pointOfObservtion[3], 0.0, 1.0, 0.0);
+	gluLookAt(viewer[0], viewer[1], viewer[2], pointOfObservtion[0], pointOfObservtion[1], pointOfObservtion[3], vectorOfUp[0], vectorOfUp[1], vectorOfUp[2]);
 	//glRotated(20.0, 1.0, 1.0, 0.0);  // Obrót o 60 stopni
 	//Axes();
 	makeOrbits();
@@ -230,6 +331,7 @@ void RenderScene(void)
 	paint();
 	Planets();
 	move();
+	
 	if (status == 1)                    // je?li lewy klawisz myszy wci?ni?ty
 	{
 		r = sqrt(pow(viewer[0], 2) + pow(viewer[1], 2) + pow(viewer[2], 2));
@@ -243,6 +345,8 @@ void RenderScene(void)
 		pointOfObservtion[0] = (r * cos(alfa) * cos(beta));
 		pointOfObservtion[1] = (r*sin(beta));
 		pointOfObservtion[2] = (r * sin(alfa) * cos(beta));
+
+
 
 	}                                 // do ró?nicy po?o?e? kursora myszy
 	else if (status == 2)                    // je?li lewy klawisz myszy wci?ni?ty
@@ -335,7 +439,7 @@ void ChangeSize(GLsizei horizontal, GLsizei vertical)
 	// Prze³¹czenie macierzy bie¿¹cej na macierz projekcji 
 	glLoadIdentity();
 
-	gluPerspective(120, 1.0, 1.0, 1000.0);
+	gluPerspective(120, 1.0, 000.1, 1000.0);
 	// Ustawienie parametrów dla rzutu perspektywicznego
 
 	if (horizontal <= vertical)
@@ -403,7 +507,20 @@ void keys(unsigned char key, int x, int y)
 	if (key == 'd') viewer[0] += 1;
 	if (key == 'q') viewer[2] += 1;
 	if (key == 'e') viewer[2] -= 1;
-	//if (key == '1') viewer[0] -= 1;
+	if (key == '1') test = 1;
+	if (key == '2') test = 2;
+	if (key == '3') test = 3;
+	if (key == '4') test = 4;
+	if (key == '5') test = 5;
+	if (key == '6') test = 6;
+	if (key == '7') test = 7;
+	if (key == '8') test = 8;
+	if (key == '9') test = 9;
+	if (key == 'i') alfaP += 0.2;
+	if (key == 'k') alfaP -= 0.2;
+	if (key == 'j') betaP -= 0.2;
+	if (key == 'l') betaP += 0.2;
+	
 
 
 
